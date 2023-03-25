@@ -4,6 +4,16 @@ import React from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { Paper, Box } from "@mui/material";
 
+interface Court {
+  id: number;
+  name: string;
+  [key: string]: string | number;
+}
+
+interface CourtsTableProps {
+  courts: Court[];
+}
+
 const timeSlots = [
   "8:00 AM",
   "8:30 AM",
@@ -31,8 +41,7 @@ const timeSlots = [
   "7:30 PM",
   // ... add more time slots if needed
 ];
-
-const columns = [
+const columns: GridColDef[] = [
   { field: "name", headerName: "Court Name", width: 150 },
   ...timeSlots.map((time, index) => ({
     field: `time${index}`,
@@ -60,9 +69,15 @@ const columns = [
   })),
 ];
 
-const BookingTable = ({ courts }) => {
+const BookingTable: React.FC<CourtsTableProps> = ({ courts }) => {
   return (
-    <Paper style={{ width: "100%", height: "calc(100vh - 100px)" }}>
+    <Paper
+      style={{
+        width: "100%",
+        height: "calc(100vh - 160px)",
+        border: "1px solid #cccccc",
+      }}
+    >
       <DataGrid
         rows={courts}
         columns={columns}
