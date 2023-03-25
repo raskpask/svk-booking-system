@@ -1,10 +1,8 @@
 // components/CourtsTable.js
 
-// components/CourtsTable.js
-
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { Paper } from "@mui/material";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { Paper, Box } from "@mui/material";
 
 const timeSlots = [
   "8:00 AM",
@@ -39,13 +37,32 @@ const columns = [
   ...timeSlots.map((time, index) => ({
     field: `time${index}`,
     headerName: time,
-    width: 120,
+    width: 90,
+    renderCell: (params: GridRenderCellParams) => {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "#f0f0f0",
+            },
+          }}
+        >
+          {params.value}
+        </Box>
+      );
+    },
   })),
 ];
 
-const CourtsTable = ({ courts }) => {
+const BookingTable = ({ courts }) => {
   return (
-    <Paper style={{ width: "100%", height: 400 }}>
+    <Paper style={{ width: "100%", height: "calc(100vh - 100px)" }}>
       <DataGrid
         rows={courts}
         columns={columns}
@@ -58,4 +75,4 @@ const CourtsTable = ({ courts }) => {
   );
 };
 
-export default CourtsTable;
+export default BookingTable;
