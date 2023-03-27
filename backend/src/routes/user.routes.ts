@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { Booking } from "../model/booking";
 import { convertToEnum } from "../model/enums/courtType";
 import { getBookings, makeBooking } from "../repos/bookingRepo";
 

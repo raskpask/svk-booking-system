@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import healthRouter from './src/routes/health.routes';
 import bookingRouter from './src/routes/booking.routes';
+import userRouter from './src/routes/user.routes';
+
 
 dotenv.config();
 
@@ -12,8 +14,12 @@ app.get('/', (req, res) => {
   res.send('Express + TypeScript Server');
 });
 
+// express.json()
+app.use(express.json())
+
 app.use('/health', healthRouter);
 app.use('/booking', bookingRouter);
+app.use('/user', userRouter);
 app.use(healthRouter);
 
 
