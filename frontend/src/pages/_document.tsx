@@ -1,13 +1,25 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+// src/pages/_document.tsx
 
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  )
+import Document, { Html, Head, Main, NextScript } from "next/document";
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <script
+            src="https://apis.google.com/js/platform.js"
+            async
+            defer
+          ></script>
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
+
+export default MyDocument;
