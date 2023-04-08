@@ -1,41 +1,72 @@
-// components/CourtBookingPage.js
+// src/pages/booking.tsx
+import React, { useState, useEffect } from "react";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
+import { DatePicker } from "@mui/lab";
+import { LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import CourtList from "./CourtList";
+import { fetchAvailableTimeSlots } from "../../services/mockApi";
 
-// components/CourtBookingPage.js
+const BookingPage: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [availableTimeSlots, setAvailableTimeSlots] = useState({});
 
-import React from "react";
-import BookingTable from "./bookingTable";
-import { Container, Typography } from "@mui/material";
+  useEffect(() => {
+    async function fetchTimeSlots() {
+      const timeSlots = await fetchAvailableTimeSlots(selectedDate);
+      console.log("timeSlots", timeSlots);
+      setAvailableTimeSlots(timeSlots);
+    }
 
-const CourtBookingPage = () => {
-  // Sample data - replace this with your actual data
-  const courts = [
-    {
-      id: 1,
-      name: "Court A",
-      time0: "Available",
-      time1: "Available",
-      time2: "Booked",
-      // ... add data for all the time slots
-    },
-    {
-      id: 2,
-      name: "Court B",
-      time0: "Booked",
-      time1: "Available",
-      time2: "Available",
-      // ... add data for all the time slots
-    },
-    // ... add more rows for all the courts
-  ];
+    fetchTimeSlots();
+  }, [selectedDate]);
+
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setSelectedDate(date);
+    }
+  };
+
+  const changeDateBy = (days: number) => {
+    const newDate = new Date(selectedDate);
+    newDate.setDate(selectedDate.getDate() + days);
+    setSelectedDate(newDate);
+  };
 
   return (
-    <Container maxWidth="xl">
-      <Typography variant="h4" component="h1" gutterBottom>
-        Court Booking
-      </Typography>
-      <BookingTable courts={courts} />
-    </Container>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: 4,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="h6">
+            {selectedDate.toLocaleDateString()}
+          </Typography>
+          <IconButton onClick={() => changeDateBy(-1)}>
+            <ArrowBackIos />
+          </IconButton>
+          <DatePicker
+            label="Select Date"
+            value={selectedDate}
+            onChange={handleDateChange}
+            renderInput={(params) => (
+              <TextField {...params} sx={{ marginLeft: 1, marginRight: 1 }} />
+            )}
+          />
+          <IconButton onClick={() => changeDateBy(1)}>
+            <ArrowForwardIos />
+          </IconButton>
+        </Box>
+        <CourtList timeSlotsByCourt={availableTimeSlots} />
+      </Box>
+    </LocalizationProvider>
   );
 };
 
-export default CourtBookingPage;
+export default BookingPage;
