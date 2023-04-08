@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, TextField, Grid, Typography } from "@mui/material";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
@@ -46,6 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           </Button>
         </Grid>
       </Grid>
+      <GoogleLoginButton />
     </form>
   );
 };
