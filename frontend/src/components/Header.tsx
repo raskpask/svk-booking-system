@@ -37,7 +37,7 @@ const Header: React.FC = () => {
     <AppBar position="sticky" sx={{ flexGrow: 1, zIndex: 1201 }}>
       <CustomToolbar>
         <Link href="/" passHref>
-          <Logo variant="h6">Dummy Logo</Logo>
+          <Logo variant="h6">Rösjö beachvolley arena</Logo>
         </Link>
         <RightHeaders>
           <LanguageSwitcher />

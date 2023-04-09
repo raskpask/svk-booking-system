@@ -2,6 +2,7 @@ import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
+import BookingPage from "./components/booking/bookingPage";
 
 export default function App() {
   return (

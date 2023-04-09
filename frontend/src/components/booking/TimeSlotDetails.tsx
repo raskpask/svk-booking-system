@@ -1,14 +1,16 @@
 // src/components/TimeSlotDetails.tsx
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 
 interface TimeSlotDetailsProps {
-  time: string;
+  startTime: string;
+  endTime: string;
   available: boolean;
 }
 
 const TimeSlotDetails: React.FC<TimeSlotDetailsProps> = ({
-  time,
+  startTime,
+  endTime,
   available,
 }) => {
   return (
@@ -24,11 +26,29 @@ const TimeSlotDetails: React.FC<TimeSlotDetailsProps> = ({
         transition: "height 0.3s",
       }}
     >
-      <Typography variant="h6">Time: {time}</Typography>
+      <Typography variant="h6">
+        Time: {startTime} - {endTime}
+      </Typography>
       <Typography>
         Status: {available ? "Available" : "Not Available"}
       </Typography>
-      {/* Add more details here */}
+      {available && (
+        <Typography variant="h6">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            sx={{
+              width: "200px",
+              height: "80px",
+              margin: "10px",
+              fontSize: "20px",
+            }}
+          >
+            Boka
+          </Button>
+        </Typography>
+      )}
     </Box>
   );
 };

@@ -1,21 +1,21 @@
 // src/pages/booking.tsx
 import React, { useState, useEffect } from "react";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
-import { DatePicker } from "@mui/lab";
-import { LocalizationProvider } from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import CourtList from "./CourtList";
 import { fetchAvailableTimeSlots } from "../../services/mockApi";
+import "dayjs/locale/de";
+import dayjs from "dayjs";
 
 const BookingPage: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [availableTimeSlots, setAvailableTimeSlots] = useState({});
+  const [selectedDate, setSelectedDate] = useState<any>(dayjs(Date.now()));
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
   useEffect(() => {
     async function fetchTimeSlots() {
       const timeSlots = await fetchAvailableTimeSlots(selectedDate);
-      console.log("timeSlots", timeSlots);
       setAvailableTimeSlots(timeSlots);
     }
 
@@ -28,41 +28,22 @@ const BookingPage: React.FC = () => {
     }
   };
 
-  const changeDateBy = (days: number) => {
-    const newDate = new Date(selectedDate);
-    newDate.setDate(selectedDate.getDate() + days);
-    setSelectedDate(newDate);
-  };
-
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "start",
           marginTop: 4,
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="h6">
-            {selectedDate.toLocaleDateString()}
-          </Typography>
-          <IconButton onClick={() => changeDateBy(-1)}>
-            <ArrowBackIos />
-          </IconButton>
-          <DatePicker
-            label="Select Date"
-            value={selectedDate}
-            onChange={handleDateChange}
-            renderInput={(params) => (
-              <TextField {...params} sx={{ marginLeft: 1, marginRight: 1 }} />
-            )}
-          />
-          <IconButton onClick={() => changeDateBy(1)}>
-            <ArrowForwardIos />
-          </IconButton>
-        </Box>
+        <DatePicker
+          label="Select Date"
+          views={["year", "month", "day"]}
+          value={selectedDate}
+          onChange={handleDateChange}
+        />
         <CourtList timeSlotsByCourt={availableTimeSlots} />
       </Box>
     </LocalizationProvider>

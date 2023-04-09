@@ -3,12 +3,13 @@ import React from "react";
 import { Paper } from "@mui/material";
 
 interface TimeSlotProps {
-  time: string;
+  startTime: string;
+  endTime: string;
   available: boolean;
   onClick: () => void;
 }
 
-const TimeSlot: React.FC<TimeSlotProps> = ({ time, available, onClick }) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({ startTime, endTime, available, onClick }) => {
   return (
     <Paper
       elevation={available ? 3 : 0}
@@ -24,7 +25,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ time, available, onClick }) => {
         cursor: available ? "pointer" : "default",
       }}
     >
-      {time}
+      {startTime} - {endTime}
     </Paper>
   );
 };
