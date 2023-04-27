@@ -43,7 +43,6 @@ const Court: React.FC<CourtProps> = ({ court }) => {
             endTime={timeSlot.endTime}
             available={timeSlot.available}
             onClick={() => {
-              console.log(timeSlot);
               if (visibleTimeSlot == timeSlot) {
                 setVisibleTimeSlot(null);
               } else {
@@ -59,6 +58,8 @@ const Court: React.FC<CourtProps> = ({ court }) => {
             startTime={visibleTimeSlot.startTime}
             endTime={visibleTimeSlot.endTime}
             available={visibleTimeSlot.available}
+            courtId={visibleTimeSlot.courtId}
+            timeSlotId={visibleTimeSlot.id}
           />
         </Box>
       )}

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import TimeSlot from "./TimeSlot";
-import TimeSlotDetails from "./TimeSlotDetails";
 import { UUID } from "crypto";
 import { log } from "console";
 import Court from "./Court";
@@ -11,6 +10,8 @@ export type TimeSlotData = {
   startTime: string;
   endTime: string;
   available: boolean;
+  courtId: number;
+  id: number;
 };
 
 export type CourtData = {

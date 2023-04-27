@@ -1,16 +1,10 @@
-// src/pages/booking.tsx
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, TextField, Typography } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Box, TextField, Typography } from "@mui/material";
 import CourtList from "./CourtList";
 import { fetchAvailableTimeSlots } from "../../services/mockApi";
-import "dayjs/locale/de";
-import dayjs from "dayjs";
 
 const BookingPage: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<any>(dayjs(Date.now()));
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
   useEffect(() => {
@@ -29,24 +23,25 @@ const BookingPage: React.FC = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "start",
-          marginTop: 4,
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "start",
+        marginTop: 4,
+      }}
+    >
+      <TextField
+        label="Select Date"
+        type="date"
+        value={selectedDate.toISOString().split("T")[0]}
+        onChange={(e) => handleDateChange(new Date(e.target.value))}
+        InputLabelProps={{
+          shrink: true,
         }}
-      >
-        <DatePicker
-          label="Select Date"
-          views={["year", "month", "day"]}
-          value={selectedDate}
-          onChange={handleDateChange}
-        />
-        <CourtList timeSlotsByCourt={availableTimeSlots} />
-      </Box>
-    </LocalizationProvider>
+      />
+      <CourtList timeSlotsByCourt={availableTimeSlots} />
+    </Box>
   );
 };
 
